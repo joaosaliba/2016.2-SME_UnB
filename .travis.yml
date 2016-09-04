@@ -8,3 +8,5 @@ install:
     - pip install nose
 script:
     - nosetests
+install:
+    - pip install -r SME_UnB/requirements.txt
