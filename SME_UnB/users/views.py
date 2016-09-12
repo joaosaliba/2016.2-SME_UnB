@@ -44,7 +44,19 @@ def register(request):
         first_name = form.get('first_name')
         last_name =  form.get('last_name')
         password = form.get('password')
+        confirPassword = form.get('confirmPassword')
         email = form.get('email')
+
+        if not first_name.isalpha() or not last_name.isalpha():
+            return render(request,'userRegister/register.html', {'falha':'Nome deve conter apenas letras'})
+        if '@' not in email or '.' not in email or ' ' in email:
+            return render(request,'userRegister/register.html', {'falha':'Email invalido! Esse e-mail nao esta em um formato valido'})
+        if MyUser.objects.filter(email=email).exists():
+            return render(request,'userRegister/register.html', {'falha':'Email invalido! Esse e-mail ja esta cadastrado no nosso banco de dados'})
+        if len(password) <6 and password!=confirPassword:
+            return render(request,'userRegister/register.html', {'falha':'Senha Invalida, digite uma senha com no minimo 6 letras'})
+        if password !=confirPassword:
+            return render(request,'userRegister/register.html', {'falha':'Senha invalida! Senhas de cadastros diferentes'})
 
 
         try:
@@ -73,7 +85,21 @@ def edit_user(request,user_id):
         first_name = form.get('first_name')
         last_name =  form.get('last_name')
         password = form.get('password')
+        confirPassword = form.get('confirmPassword')
         email = form.get('email')
+
+        if not first_name.isalpha() or not last_name.isalpha():
+            return render(request,'userRegister/register.html', {'falha':'Nome deve conter apenas letras'})
+        if '@' not in email or '.' not in email or ' ' in email:
+            return render(request,'userRegister/register.html', {'falha':'Email invalido! Esse e-mail nao esta em um formato valido'})
+        if MyUser.objects.filter(email=email).exists():
+            return render(request,'userRegister/register.html', {'falha':'Email invalido! Esse e-mail ja esta cadastrado no nosso banco de dados'})
+        if len(password) <6 and password!=confirPassword:
+            return render(request,'userRegister/register.html', {'falha':'Senha Invalida, digite uma senha com no minimo 6 letras'})
+        if password !=confirPassword:
+            return render(request,'userRegister/register.html', {'falha':'Senha invalida! Senhas de cadastros diferentes'})
+
+
 
         user.first_name = first_name
         user.last_name  =last_name
