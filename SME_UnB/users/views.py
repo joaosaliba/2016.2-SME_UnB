@@ -35,6 +35,7 @@ def logout_view(request, *args, **kwargs):
     kwargs['next_page'] = reverse('index')
     return logout(request, *args, **kwargs)
 
+@login_required
 def register(request):
 
     if request.method == "GET":
@@ -65,16 +66,23 @@ def register(request):
             return render(request,'userRegister/register.html', {'falha':'Email invalido!'})
 
 
-
         user.save()
 
         return render(request,'users/home.html')
 
-def list_user(request):
+@login_required
+def list_user_edit(request):
 
     users = MyUser.objects.all()
-    return render(request,'users/list_user.html',{'users':users})
+    return render(request,'users/list_user_edit.html',{'users':users})
 
+@login_required
+def list_user_delete(request):
+
+    users = MyUser.objects.all()
+    return render(request,'users/list_user_delete.html',{'users':users})
+
+@login_required
 def edit_user(request,user_id):
 
     user = MyUser.objects.get(id=user_id)
@@ -109,3 +117,14 @@ def edit_user(request,user_id):
         user.save()
 
         return render(request,'users/edit_user.html',{'info':'usuario modificado com sucesso'})
+
+@login_required
+def delete_user(request,user_id):
+
+    user = MyUser.objects.get(id=user_id)
+    if request.method == "GET":
+        return render(request,'users/delete_user.html',{'user':user})
+    else:
+            user.delete()
+
+    return render (request, 'users/dashboard.html',{'info':'usuario deletado com sucesso'})
