@@ -11,11 +11,6 @@ class TransductorModel(models.Model):
     serial_protocol = models.CharField(max_length=50)
     register_addresses = ArrayField(models.IntegerField())
 
-    class Meta:
-        permissions = (
-            ("can_view", "Can view Transductors page")
-        )
-
     def __str__(self):
         return self.name
 
@@ -35,6 +30,10 @@ class Transductor(models.Model):
 
     class Meta:
         abstract = True
+        permissions = (
+            ("can_view_transductors", "Can view Transductors page")
+        )
+
 
 
 class EnergyTransductor(Transductor):

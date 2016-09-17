@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from .forms import EnergyForm
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 def index(request):
@@ -15,6 +15,8 @@ def index(request):
 
     return render(request, template_name, {'transductors_list': transductors_list})
 
+
+@permission_required(Transductor.can_view_transductors)
 @login_required
 def detail(request, transductor_id):
     template_name = 'transductor/detail.html'
@@ -34,6 +36,8 @@ def detail(request, transductor_id):
 
     return render(request, template_name, {'measurements': data, 'transductor': transductor})
 
+
+@permission_required(Transductor.can_view_transductors)
 @login_required
 def new(request):
     if request.POST:
@@ -59,6 +63,8 @@ def new(request):
 
     return render(request, 'transductor/new.html', {'form': form})
 
+
+@permission_required(Transductor.can_view_transductors)
 @login_required
 def edit(request, transductor_id):
     transductor = get_object_or_404(EnergyTransductor, pk=transductor_id)
@@ -81,6 +87,8 @@ def edit(request, transductor_id):
 
     return render(request, 'transductor/new.html', {'form': form})
 
+
+@permission_required(Transductor.can_view_transductors)
 @login_required
 def delete(request, transductor_id):
     transductor = get_object_or_404(EnergyTransductor, pk=transductor_id)
