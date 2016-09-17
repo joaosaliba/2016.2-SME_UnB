@@ -1,19 +1,14 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.views.generic import CreateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import login
-
 from django.contrib.auth import authenticate
-
 from django.contrib.auth.views import logout
 from django.contrib.auth.decorators import login_required
 
-from django.core.urlresolvers import reverse_lazy, reverse
 
 def home(request):
     return render(request, 'users/home.html')
+
 
 @login_required
 def dashboard(request):
@@ -34,6 +29,7 @@ def show_login(request):
             return HttpResponseRedirect(reverse("users:dashboard"))
         else:
             return render(request, "users/login.html", context)
+
 
 def make_login(request):
     form = request.POST
