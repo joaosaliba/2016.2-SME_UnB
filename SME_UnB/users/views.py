@@ -69,7 +69,7 @@ def register(request):
         confirPassword = form.get('confirmPassword')
         email = form.get('email')
 
-        # Este bloco sairá daqui e irá pra model
+        # Este bloco saira daqui e ira pra model
         if not first_name.isalpha() or not last_name.isalpha():
             return render(request, 'userRegister/register.html', {'falha': 'Nome deve conter apenas letras'})
         if '@' not in email or '.' not in email or ' ' in email:
@@ -80,7 +80,7 @@ def register(request):
             return render(request, 'userRegister/register.html', {'falha': 'Senha Invalida, digite uma senha com no minimo 6 letras'})
         if password != confirPassword:
             return render(request, 'userRegister/register.html', {'falha': 'Senha invalida! Senhas de cadastros diferentes'})
-        # Fim do bloco que sairá da view
+        # Fim do bloco que saira da view
 
         try:
             user = User.objects.create_user(
@@ -129,7 +129,7 @@ def list_user_delete(request):
     return render(request, 'users/list_user_delete.html', {'users': users})
 
 
-@permission_required(ModelAdmin.has_edit_permission)
+@permission_required("ModelAdmin.has_edit_permission")
 @login_required
 def edit_user(request, user_id):
 
@@ -155,7 +155,7 @@ def edit_user(request, user_id):
         checkbox_delete_user = "checked" if user.has_perm(
             ModelAdmin.has_delete_permission) else ''
 
-        # Este bloco sairá daqui e irá para a model
+        # Este bloco saira daqui e ira para a model
         if not first_name.isalpha() or not last_name.isalpha():
             return render(request, 'userRegister/register.html', {'falha': 'Nome deve conter apenas letras'})
         if '@' not in email or '.' not in email or ' ' in email:
@@ -166,7 +166,7 @@ def edit_user(request, user_id):
             return render(request, 'userRegister/register.html', {'falha': 'Senha Invalida, digite uma senha com no minimo 6 letras'})
         if password != confirPassword:
             return render(request, 'userRegister/register.html', {'falha': 'Senha invalida! Senhas de cadastros diferentes'})
-        # Fim do bloco que sairá daqui
+        # Fim do bloco que saira daqui
 
         """Check if user to be edited has_perm, if not check if it's marked"""
         user_permissions = []
@@ -210,7 +210,7 @@ def edit_user(request, user_id):
 # Precisa de permissao (!)
 
 
-@permission_required(ModelAdmin.has_delete_permission)
+@permission_required("ModelAdmin.has_delete_permission")
 @login_required
 def delete_user(request, user_id):
 

@@ -1,4 +1,4 @@
-from .models import EnergyTransductor, TransductorModel
+from .models import EnergyTransductor, TransductorModel, Transductor
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ValidationError
@@ -16,7 +16,7 @@ def index(request):
     return render(request, template_name, {'transductors_list': transductors_list})
 
 
-@permission_required(Transductor.can_view_transductors)
+@permission_required('transductor.can_view_transductors')
 @login_required
 def detail(request, transductor_id):
     template_name = 'transductor/detail.html'
@@ -37,7 +37,7 @@ def detail(request, transductor_id):
     return render(request, template_name, {'measurements': data, 'transductor': transductor})
 
 
-@permission_required(Transductor.can_view_transductors)
+@permission_required('transductor.can_view_transductors')
 @login_required
 def new(request):
     if request.POST:
@@ -64,7 +64,7 @@ def new(request):
     return render(request, 'transductor/new.html', {'form': form})
 
 
-@permission_required(Transductor.can_view_transductors)
+@permission_required('transductor.can_view_transductors')
 @login_required
 def edit(request, transductor_id):
     transductor = get_object_or_404(EnergyTransductor, pk=transductor_id)
@@ -88,7 +88,7 @@ def edit(request, transductor_id):
     return render(request, 'transductor/new.html', {'form': form})
 
 
-@permission_required(Transductor.can_view_transductors)
+@permission_required('transductor.can_view_transductors')
 @login_required
 def delete(request, transductor_id):
     transductor = get_object_or_404(EnergyTransductor, pk=transductor_id)
